@@ -324,17 +324,25 @@
                     break;
 
                   case KEY.BACKSPACE:
+
                       previous_token = input_token.prev();
 
                       if (this.value.length === 0) {
+
                         if (selected_token) {
-                          delete_token($(selected_token));
-                          hiddenInput.change();
+
+                            delete_token($(selected_token));
+                            hiddenInput.change();
+
                         } else if(previous_token.length) {
-                          select_token($(previous_token.get(0)));
+                            select_token($(previous_token.get(0)));
+                            previous_token = input_token.prev();
+                            delete_token($(selected_token));
+                            hiddenInput.change();
                         }
 
                         return false;
+
                       } else if($(this).val().length === 1) {
                           hide_dropdown();
                       } else {
