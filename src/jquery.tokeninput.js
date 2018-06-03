@@ -244,6 +244,9 @@
       var timeout;
       var input_val;
 
+      // Save the last key pressed before adding a token
+      let lastKeyPressed
+
       // Create a new text input an attach keyup events
       var input_box = $("<input type=\"text\" autocomplete=\"off\" autocapitalize=\"off\"/>")
           .css({
@@ -352,6 +355,9 @@
                   case KEY.ENTER:
                   case KEY.NUMPAD_ENTER:
                   case KEY.COMMA:
+
+                    lastKeyPressed = event.keyCode
+
                     if(selected_dropdown_item) {
                       add_token($(selected_dropdown_item).data("tokeninput"));
                       hiddenInput.change();
@@ -695,8 +701,10 @@
 
           // Execute the onAdd callback if defined
           if($.isFunction(callback)) {
-              callback.call(hiddenInput,item);
+              callback.call(hiddenInput,item, lastKeyPressed);
           }
+
+          lastKeyPressed = null
       }
 
       // Select a token in the token list
