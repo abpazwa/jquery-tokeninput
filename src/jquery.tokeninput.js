@@ -601,7 +601,7 @@
           var tokens = value.split($(input).data("settings").tokenDelimiter);
           $.each(tokens, function(i, token) {
             if (!token) {
-              return;
+                return add_token(null);
             }
 
             if ($.isFunction($(input).data("settings").onFreeTaggingAdd)) {
@@ -661,6 +661,10 @@
       // Add a token to the token list based on user input
       function add_token (item) {
           var callback = $(input).data("settings").onAdd;
+
+          if (!item) {
+            return callback.call(hiddenInput, null, lastKeyPressed);
+          }
 
           // See if the token already exists and select it if we don't want duplicates
           if(token_count > 0 && $(input).data("settings").preventDuplicates) {
